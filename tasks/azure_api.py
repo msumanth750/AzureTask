@@ -2,7 +2,7 @@ import os
 import requests
 
 # See link down below to generate your Private Access Token
-AZURE_DEVOPS_PAT = "c76elpbdh4iz2igd6aczub2gjp5bv6u2h5rqvukhidn4imbpggcq"#os.getenv('AZURE_DEVOPS_PAT')
+AZURE_DEVOPS_PAT = "swbsi2y3svlhmnp4i6iowi2a7cftfiokhmtk6pxypa37f6gzmvyq"#os.getenv('AZURE_DEVOPS_PAT')
 url = 'https://dev.azure.com/msumanth750/TestProject/_apis/wit/workitems/$Epic?api-version=7.0'
 
 
@@ -32,6 +32,8 @@ def azure_workitem_create(data,org='msumanth750',project='TestProject',type='Tas
     r = requests.post(url, json=data,
         headers={'Content-Type': 'application/json-patch+json'},
         auth=('', AZURE_DEVOPS_PAT))
+
+    print(r)
     return r.json()
 
 def azure_workitem_update(id,data,org='msumanth750',project='TestProject'):

@@ -16,7 +16,7 @@ class UserRole(models.Model):
 
 
 class UserManager(BaseUserManager):
-  def create_user(self, email, name, tc, password=None, password2=None):
+  def create_user(self, email, name, tc,org,project,type,role, password=None, password2=None,):
       """
       Creates and saves a User with the given email, name, tc and password.
       """
@@ -27,10 +27,13 @@ class UserManager(BaseUserManager):
           email=self.normalize_email(email),
           name=name,
           tc=tc,
+          org = org,
+          type = type ,
+          role =role,
       )
-
       user.set_password(password)
       user.save(using=self._db)
+      user.project.set(project)
       return user
 
   def create_superuser(self, email, name, tc, password=None):

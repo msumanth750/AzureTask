@@ -13,13 +13,14 @@ from account.serializers import (SendPasswordResetEmailSerializer,
                                 ProjectSerialiser,
                                 ReportsSerializer,
                                 UserlistSerializer,
+                                UserRoleSerializer,
                                 )
 from django.contrib.auth import authenticate
 from account.renderers import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 
-from .models import User,Profile,Organisation,Project
+from .models import User,Profile,Organisation,Project,UserRole
 
 # Generate Token Manually
 def get_tokens_for_user(user):
@@ -31,12 +32,20 @@ def get_tokens_for_user(user):
 
 class UserRegistrationView(APIView):
   renderer_classes = [UserRenderer]
+  def get(self,request):
+      return Response({'msg':'Please register below'})
   def post(self, request, format=None):
     serializer = UserRegistrationSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     user = serializer.save()
     token = get_tokens_for_user(user)
     return Response({'token':token, 'msg':'Registration Successful'}, status=status.HTTP_201_CREATED)
+
+class UserRegistrationViewset(viewsets.ModelViewSet):
+    serializer_class = UserRegistrationSerializer
+    queryset = User.objects.all()
+
+
 
 class UserLoginView(APIView):
   renderer_classes = [UserRenderer]
@@ -105,4 +114,9 @@ class ReportsView(viewsets.ModelViewSet):
 class UsersView(viewsets.ModelViewSet):
     queryset =User.objects.all()
     serializer_class = UserlistSerializer
+    # permission_classes = [IsAuthenticated]
+
+class RolesView(viewsets.ModelViewSet):
+    queryset =UserRole.objects.all()
+    serializer_class = UserRoleSerializer
     # permission_classes = [IsAuthenticated]

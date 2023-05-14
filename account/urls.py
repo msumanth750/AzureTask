@@ -1,9 +1,9 @@
 from django.urls import path,include
 from account.views import (SendPasswordResetEmailView, UserChangePasswordView,
                             UserLoginView, UserProfileView,
-                            UserRegistrationView, UserPasswordResetView,
+                            UserRegistrationView,UserRegistrationViewset, UserPasswordResetView,
                             ProfileView,OrganisationView,
-                            ProjectView,ReportsView,UsersView)
+                            ProjectView,ReportsView,UsersView,RolesView)
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -12,6 +12,8 @@ router.register('org',OrganisationView)
 router.register('project',ProjectView)
 router.register('reports',ReportsView)
 router.register('all',UsersView)
+router.register('role',RolesView)
+router.register('enroll',UserRegistrationViewset)
 
 urlpatterns = [
     path('',include(router.urls)),

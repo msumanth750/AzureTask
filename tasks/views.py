@@ -26,13 +26,17 @@ class TaskView(viewsets.ModelViewSet):
         queryset = self.queryset
         user = self.request.user
         print(user)
-        user_type = user.type
-        if user_type.name=="Client":
-            queryset = queryset.filter(org = user.org)
-        if user_type.name=="Employee":
-            queryset=queryset.filter(project__in=user.project.all())
-        if user_type.name=='Admin':
-            queryset=queryset
+        try:
+            user_type = user.type
+            if user_type.name=="Client":
+                queryset = queryset.filter(org = user.org)
+            if user_type.name=="Employee":
+                queryset=queryset.filter(project__in=user.project.all())
+            if user_type.name=='Admin':
+                queryset=queryset
+        except AttributeError as ae:
+            # raise AttributeError("Please login to check the results")
+            queryset = self.queryset
         # if user:
         #     queryset = queryset.filter(created_by=user)
         # print(user)

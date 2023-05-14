@@ -27,4 +27,6 @@ urlpatterns = [
     # path('hello',TestView.as_view(),name='test'),
     path('api/user/', include('account.urls')),
     path('api/tasks/',include('tasks.urls')),
+
+    path('',include('frontend.urls')),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

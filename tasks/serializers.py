@@ -53,21 +53,22 @@ class TaskSerializer(serializers.ModelSerializer):
          "op": "add",
          "path": "/fields/System.Title",
          "value": title
-         },{
-         "op": "add",
-         "path": "/fields/System.Description",
-         # "from": null,
-         "value": description
          },
-         {
-         "op": "add",
-         "path": "/fields/System.History",
-         # "from": null,
-         "value": f"""Please Look at this  {task.level.name} Bug,
-                    Description: {description},
-                    Complaint id:{task.id},
-                    Created_by:{task.created_by.name} """
-         },
+         # {
+         # "op": "add",
+         # "path": "/fields/System.Description",
+         # # "from": null,
+         # "value": description
+         # },
+         # {
+         # "op": "add",
+         # "path": "/fields/System.History",
+         # # "from": null,
+         # "value": f"""Please Look at this  {task.level.name} Bug,
+         #            Description: {description},
+         #            Complaint id:{task.id},
+         #            Created_by:{task.created_by.name} """
+         # },
          {
          "op": "add",
          "path": "/fields/System.AssignedTo",

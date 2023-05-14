@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from account.models import User,Profile,Organisation,Project
+from account.models import User,Profile,Organisation,Project,UserRole
 from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
@@ -25,7 +25,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
   password2 = serializers.CharField(style={'input_type':'password'}, write_only=True)
   class Meta:
     model = User
-    fields=['email', 'name', 'password', 'password2', 'tc']
+    fields=['email', 'name', 'password', 'password2', 'tc','org',
+  'project',
+  'type',
+  'role',]
     extra_kwargs={
       'password':{'write_only':True}
     }
@@ -190,3 +193,7 @@ class UserlistSerializer(serializers.ModelSerializer):
         projects = obj.project.all()
         names = [p.name for p in projects]
         return ','.join(names)
+class UserRoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserRole
+        fields = '__all__'
