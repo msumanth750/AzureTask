@@ -75,13 +75,13 @@ class TaskSerializer(serializers.ModelSerializer):
          "value": "msumanth750@outlook.com"
          }
         ]
-        # try:
-        res = azure_workitem_create(org='msumanth750',project='TestProject',type='Task',data=data,assigned_to=None)
-        print(res)
-        task.azure = str(res['id'])
-        task.save()
-        # except Exception as e:
-        #     print('azure work item creation Failed',e)
+        try:
+            res = azure_workitem_create(org='msumanth750',project='TestProject',type='Task',data=data,assigned_to=None)
+            print(res)
+            task.azure = str(res['id'])
+            task.save()
+        except Exception as e:
+            print('azure work item creation Failed',e)
         return task
 
 
